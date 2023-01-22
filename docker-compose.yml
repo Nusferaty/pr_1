@@ -1,12 +1,22 @@
 version: "3"
 services:
-  server:
-    container_name: test_server
-    build: ./test
-    volumes:
-      - ./test:/var/www/html
-    ports:
+  nginx:
+    build:
+      dockerfile: ./Nginx/Dockerfile
+    ports: 
       - "8080:80"
+    networks:
+      - internal
+  apache:
+    build: ./Apach
+    volumes:
+      - ./Apach/pages:/var/www/html/
+      - ./Apach/deg.conf:/etc/apache2/sites-available/deg.conf
+    ports:
+      - "8081:80"
+    links:
+      - db
+      - nginx
   db:
     image: mysql
     environment:
@@ -14,4 +24,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - "./test/init.sql:/docker-entrypoint-initdb.d/init.sql"
+      - "./bd/init.sql:/docker-entrypoint-initdb.d/init.sql"
+networks:
+  internal:
+    driver: bridge
