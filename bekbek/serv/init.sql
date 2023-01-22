@@ -1,6 +1,6 @@
 CREATE DATABASE IF NOT EXISTS appDB;
 CREATE USER IF NOT EXISTS 'user'@'%' IDENTIFIED BY 'password';
-GRANT SELECT,UPDATE,INSERT ON appDB.* TO 'user'@'%';
+GRANT SELECT,UPDATE,INSERT,DELETE ON appDB.* TO 'user'@'%';
 FLUSH PRIVILEGES;
 
 USE appDB;
@@ -25,3 +25,5 @@ INSERT INTO menu (name_food, price) VALUES ('Pasta', '520.50');
 INSERT INTO menu (name_food, price) VALUES ('Soup', '410.50');
 INSERT INTO menu (name_food, price) VALUES ('Napoleon', '600.50');
 INSERT INTO menu (name_food, price) VALUES ('Matcha', '230.50');
+
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password'; 
